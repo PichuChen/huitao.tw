@@ -1,0 +1,88 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+
+const navItems = [
+  { name: '首頁', href: '/' },
+  { name: '關於我們', href: '/about' },
+  { name: '相簿', href: '/gallery' },
+  { name: '線上預約', href: '/booking' },
+  { name: '購物車', href: '/cart' },
+];
+---
+
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{title} | 慧陶香企業社</title>
+  </head>
+  <body class="min-h-screen flex flex-col">
+    <!-- Header/Nav -->
+    <header class="bg-white shadow-sm border-b border-brand-100">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex-shrink-0 flex items-center">
+            <a href="/" class="text-2xl font-bold text-brand-700 tracking-wider">慧陶香</a>
+          </div>
+          <nav class="hidden sm:flex space-x-8">
+            {navItems.map((item) => (
+              <a 
+                href={item.href} 
+                class="text-gray-600 hover:text-brand-600 px-3 py-2 rounded-md text-sm font-medium transition-colors"
+              >
+                {item.name}
+              </a>
+            ))}
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+      <slot />
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-brand-900 text-white mt-12 py-12">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div>
+          <h3 class="text-xl font-bold mb-4">慧陶香企業社</h3>
+          <p class="text-brand-200 text-sm leading-relaxed">
+            傳承傳統工藝，融合現代美學。<br/>
+            我們致力於提供最優質的陶藝作品與手作體驗，<br/>
+            讓生活充滿藝術與溫度。
+          </p>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">快速連結</h4>
+          <ul class="space-y-2 text-sm text-brand-200">
+            {navItems.map((item) => (
+              <li><a href={item.href} class="hover:text-white transition-colors">{item.name}</a></li>
+            ))}
+          </ul>
+        </div>
+        <div>
+          <h4 class="text-lg font-semibold mb-4">聯絡資訊</h4>
+          <ul class="space-y-2 text-sm text-brand-200">
+            <li>電話：02-1234-5678</li>
+            <li>Email：contact@huitao.tw</li>
+            <li>地址：手作陶藝基地，某某市某某區</li>
+          </ul>
+        </div>
+      </div>
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-8 border-t border-brand-800 text-center text-sm text-brand-300">
+        &copy; {new Date().getFullYear()} 慧陶香企業社 版权所有
+      </div>
+    </footer>
+  </body>
+</html>

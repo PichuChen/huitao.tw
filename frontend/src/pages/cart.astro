@@ -1,0 +1,114 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="購物車">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 pb-32">
+    <div class="text-center mb-16">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4 tracking-wider">您的購物車</h1>
+      <div class="w-16 h-1 bg-brand-500 mx-auto rounded-full"></div>
+    </div>
+
+    <!-- Layout Container -->
+    <div class="flex flex-col lg:flex-row gap-12">
+      <!-- Cart Items (Left) -->
+      <div class="lg:w-2/3 bg-white rounded-2xl shadow-sm p-6 sm:p-8">
+        <h2 class="text-2xl font-bold text-gray-800 border-b border-gray-100 pb-4 mb-6">商品明細</h2>
+        
+        <div class="space-y-6">
+          <!-- Item 1 -->
+          <div class="flex flex-col sm:flex-row items-center gap-6 pb-6 border-b border-gray-100">
+            <div class="w-full sm:w-24 h-24 rounded-xl overflow-hidden bg-gray-100 shrink-0">
+              <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=400&fit=crop" alt="手工陶杯" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-grow text-center sm:text-left">
+              <h3 class="text-lg font-bold text-gray-900">溫潤手捻陶杯</h3>
+              <p class="text-sm text-gray-500 mt-1">顏色：大地灰 / 規格：300ml</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="flex items-center border border-gray-200 rounded-lg">
+                <button class="px-3 py-1 hover:bg-gray-50 text-gray-600">-</button>
+                <span class="px-4 text-gray-800 font-medium">1</span>
+                <button class="px-3 py-1 hover:bg-gray-50 text-gray-600">+</button>
+              </div>
+              <div class="min-w-[80px] text-right">
+                <span class="text-lg font-bold text-brand-700">NT$ 850</span>
+              </div>
+              <button class="text-red-400 hover:text-red-600 p-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Item 2 -->
+          <div class="flex flex-col sm:flex-row items-center gap-6 pb-6 border-b border-gray-100">
+            <div class="w-full sm:w-24 h-24 rounded-xl overflow-hidden bg-gray-100 shrink-0">
+              <img src="https://images.unsplash.com/photo-1549463952-b0beeb5d06ce?w=400&fit=crop" alt="晨曦茶具組" class="w-full h-full object-cover">
+            </div>
+            <div class="flex-grow text-center sm:text-left">
+              <h3 class="text-lg font-bold text-gray-900">晨曦茶具套組</h3>
+              <p class="text-sm text-gray-500 mt-1">包含：茶壺x1、茶杯x2</p>
+            </div>
+            <div class="flex items-center gap-4">
+              <div class="flex items-center border border-gray-200 rounded-lg">
+                <button class="px-3 py-1 hover:bg-gray-50 text-gray-600">-</button>
+                <span class="px-4 text-gray-800 font-medium">1</span>
+                <button class="px-3 py-1 hover:bg-gray-50 text-gray-600">+</button>
+              </div>
+              <div class="min-w-[80px] text-right">
+                <span class="text-lg font-bold text-brand-700">NT$ 2,400</span>
+              </div>
+              <button class="text-red-400 hover:text-red-600 p-2">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+              </button>
+            </div>
+          </div>
+
+        </div>
+        
+        <div class="mt-8 flex justify-between items-center text-sm text-gray-500">
+          <a href="/" class="flex items-center hover:text-brand-600 transition-colors">
+            &larr; 繼續選購
+          </a>
+        </div>
+      </div>
+
+      <!-- Order Summary (Right) -->
+      <div class="lg:w-1/3">
+        <div class="bg-white rounded-2xl shadow-sm p-6 sm:p-8 sticky top-8">
+          <h2 class="text-2xl font-bold text-gray-800 border-b border-gray-100 pb-4 mb-6">訂單摘要</h2>
+          
+          <div class="space-y-4 text-gray-600 mb-6">
+            <div class="flex justify-between">
+              <span>商品小計</span>
+              <span>NT$ 3,250</span>
+            </div>
+            <div class="flex justify-between">
+              <span>運費</span>
+              <span>NT$ 100</span>
+            </div>
+            <div class="flex justify-between text-brand-600">
+              <span>優惠折扣</span>
+              <span>- NT$ 0</span>
+            </div>
+          </div>
+          
+          <div class="border-t border-gray-100 pt-4 mb-8">
+            <div class="flex justify-between items-end">
+              <span class="font-bold text-gray-800">總計</span>
+              <span class="text-3xl font-black text-brand-700">NT$ 3,350</span>
+            </div>
+          </div>
+          
+          <button class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 rounded-lg text-lg shadow-md hover:shadow-lg transition-all transform hover:-translate-y-0.5">
+            前往結帳
+          </button>
+          
+          <div class="mt-4 text-center">
+            <p class="text-xs text-gray-400">目前為靜態展示，尚未串接後端結帳系統</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Layout>

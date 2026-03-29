@@ -1,0 +1,72 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="首頁">
+  <!-- Hero Section -->
+  <section class="relative bg-brand-700 overflow-hidden text-center flex flex-col items-center justify-center py-32 px-4 shadow-xl">
+    <div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-overlay" style="background-image: url('https://images.unsplash.com/photo-1627949313437-1473cdbe7fc5?w=1600&auto=format&fit=crop');"></div>
+    <div class="relative z-10 max-w-4xl mx-auto">
+      <h1 class="text-5xl md:text-6xl font-extrabold text-white tracking-tight mb-6 decoration-brand-400">
+        感受泥土的溫度，形塑生活之美
+      </h1>
+      <p class="text-xl md:text-2xl text-brand-100 font-light mb-10 max-w-2xl mx-auto leading-relaxed">
+        慧陶香企業社，專注於手工陶藝創作與課程體驗。每一件作品，都是手心溫度的傳遞。
+      </p>
+      <div class="flex justify-center gap-6">
+        <a href="/gallery" class="px-8 py-3 rounded-full bg-brand-500 hover:bg-brand-600 text-white font-semibold transition-transform transform hover:-translate-y-1">
+          探索作品
+        </a>
+        <a href="/booking" class="px-8 py-3 rounded-full border-2 border-brand-200 text-brand-50 hover:bg-brand-50 hover:text-brand-900 font-semibold transition-all">
+          預約體驗
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products / Services -->
+  <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+    <div class="text-center mb-16">
+      <h2 class="text-3xl font-bold text-gray-900 mb-4">精選特色服務</h2>
+      <div class="w-16 h-1 bg-brand-500 mx-auto rounded-full"></div>
+    </div>
+    
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+      <!-- Item 1 -->
+      <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow overflow-hidden group">
+        <div class="h-64 bg-gray-200 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800&auto=format&fit=crop" alt="手工陶杯" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-2">彩繪藝術</h3>
+          <p class="text-gray-600 mb-4">用絢麗色彩點綴陶土，讓溫潤的手作器皿化身為展現個人風格的專屬畫布，為生活注入無限創意。</p>
+          <a href="/cart" class="text-brand-600 font-medium hover:text-brand-800">去選購 &rarr;</a>
+        </div>
+      </div>
+      
+      <!-- Item 2 -->
+      <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow overflow-hidden group">
+        <div class="h-64 bg-gray-200 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1493106641515-6b5623bf1fa6?w=800&auto=format&fit=crop" alt="手作課程" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-2">陶藝手作體驗</h3>
+          <p class="text-gray-600 mb-4">專業導師親自指導，從揉捏泥土開始，零基礎也能創作獨家器皿。</p>
+          <a href="/booking" class="text-brand-600 font-medium hover:text-brand-800">立即預約 &rarr;</a>
+        </div>
+      </div>
+      
+      <!-- Item 3 -->
+      <div class="bg-white rounded-2xl shadow-sm hover:shadow-lg transition-shadow overflow-hidden group">
+        <div class="h-64 bg-gray-200 overflow-hidden">
+          <img src="https://images.unsplash.com/photo-1574312891334-bf4b2628468d?w=800&auto=format&fit=crop" alt="陶藝展覽" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-gray-900 mb-2">作品相簿展覽</h3>
+          <p class="text-gray-600 mb-4">歷年得獎與精選學員作品展示，看見每件作品背後的動人故事。</p>
+          <a href="/gallery" class="text-brand-600 font-medium hover:text-brand-800">觀賞作品 &rarr;</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</Layout>

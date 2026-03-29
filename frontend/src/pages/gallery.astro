@@ -1,0 +1,43 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+// 模擬相簿資料
+const galleryItems = [
+  { img: "https://images.unsplash.com/photo-1549463952-b0beeb5d06ce?w=800&auto=format&fit=crop", title: "晨曦茶具組" },
+  { img: "https://images.unsplash.com/photo-1577969348983-32860dff5ea3?w=800&auto=format&fit=crop", title: "陶土花器" },
+  { img: "https://images.unsplash.com/photo-1616428782352-763266eb5637?w=800&auto=format&fit=crop", title: "日式手作碗" },
+  { img: "https://images.unsplash.com/photo-1596756860368-80e9a44c5ce7?w=800&auto=format&fit=crop", title: "學員體驗側拍" },
+  { img: "https://images.unsplash.com/photo-1493106641515-6b5623bf1fa6?w=800&auto=format&fit=crop", title: "復古陶盤" },
+  { img: "https://images.unsplash.com/photo-1574312891334-bf4b2628468d?w=800&auto=format&fit=crop", title: "陶藝展區" },
+];
+---
+
+<Layout title="相簿">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 pb-32">
+    <div class="text-center mb-16">
+      <h1 class="text-4xl font-bold text-gray-900 mb-4 tracking-wider">作品相簿</h1>
+      <p class="text-xl text-gray-500 max-w-2xl mx-auto mb-6">透過鏡頭捕捉每一件手作器物的美與學員專注的神情</p>
+      <div class="w-16 h-1 bg-brand-500 mx-auto rounded-full"></div>
+    </div>
+
+    <!-- Masonry grid layout -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+      {galleryItems.map((item) => (
+        <a href="#" class="group relative block overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all">
+          <div class="aspect-w-1 aspect-h-1 overflow-hidden">
+            <img 
+              src={item.img} 
+              alt={item.title} 
+              class="object-cover w-full h-80 group-hover:scale-110 transition-transform duration-700 ease-in-out" 
+            />
+          </div>
+          <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
+            <div class="p-6">
+              <h3 class="text-xl font-bold text-white tracking-wide">{item.title}</h3>
+            </div>
+          </div>
+        </a>
+      ))}
+    </div>
+  </div>
+</Layout>
