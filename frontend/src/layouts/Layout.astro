@@ -23,7 +23,7 @@ const navItems = [
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    <title>{title} | 慧陶香企業社</title>
+    <title>{title} | 慧陶香坊</title>
   </head>
   <body class="min-h-screen flex flex-col">
     <!-- Header/Nav -->
@@ -31,9 +31,12 @@ const navItems = [
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center h-16">
           <div class="flex-shrink-0 flex items-center">
-            <a href="/" class="flex flex-col items-start leading-none group">
-              <span class="text-2xl font-bold text-brand-700 tracking-wider group-hover:text-brand-800 transition-colors">慧陶香坊</span>
-              <span class="text-[10px] uppercase text-brand-500 tracking-[0.2em] mt-1 group-hover:text-brand-600 transition-colors">huitao Xiang wellness</span>
+            <a href="/" class="flex items-center gap-3 group">
+              <img src="/images/logo.svg" alt="慧陶香坊 Logo" class="hidden sm:block h-10 w-10 object-contain" />
+              <div class="flex flex-col items-start leading-none">
+                <span class="text-2xl font-bold text-brand-700 tracking-wider group-hover:text-brand-800 transition-colors">慧陶香坊</span>
+                <span class="text-[10px] uppercase text-brand-500 tracking-[0.2em] mt-1 group-hover:text-brand-600 transition-colors">huitao Xiang wellness</span>
+              </div>
             </a>
           </div>
           <nav class="hidden sm:flex space-x-8">
@@ -59,7 +62,7 @@ const navItems = [
     <footer class="bg-brand-900 text-white mt-12 py-12">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8">
         <div>
-          <h3 class="text-xl font-bold mb-4">慧陶香企業社</h3>
+          <h3 class="text-xl font-bold mb-4">慧陶香坊</h3>
           <p class="text-brand-200 text-sm leading-relaxed">
             傳承傳統工藝，融合現代美學。<br/>
             我們致力於提供最優質的陶藝作品與手作體驗，<br/>
@@ -85,7 +88,7 @@ const navItems = [
         </div>
       </div>
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-8 pt-8 border-t border-brand-800 text-center text-sm text-brand-300">
-        &copy; {new Date().getFullYear()} 慧陶香企業社 版权所有
+        &copy; {new Date().getFullYear()} 慧陶香坊 版权所有
       </div>
     </footer>
   </body>

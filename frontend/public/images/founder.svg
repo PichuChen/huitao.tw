@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 360" role="img" aria-labelledby="title">
+  <title>創辦人許朱慧</title>
+  <rect width="360" height="360" rx="32" fill="#fbfbfb"/>
+  <circle cx="180" cy="120" r="68" fill="#D8D8FF"/>
+  <path d="M132 230 C132 190 228 190 228 230 S204 292 180 292 S132 270 132 230" fill="#CBD5E1"/>
+  <path d="M120 142 C120 118 138 98 180 98 C222 98 240 118 240 142" stroke="#475569" stroke-width="10" fill="none" stroke-linecap="round"/>
+  <rect x="90" y="242" width="180" height="14" rx="7" fill="#94A3B8"/>
+  <text x="180" y="325" text-anchor="middle" font-size="26" fill="#475569" font-family="sans-serif">Founders</text>
+</svg>

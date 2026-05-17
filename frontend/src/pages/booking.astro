@@ -15,7 +15,9 @@ import Layout from '../layouts/Layout.astro';
       <div class="p-8 md:p-12 text-gray-800">
         <h2 class="text-2xl font-bold mb-8 text-brand-700">填寫您的預約資訊</h2>
         
-        <form class="space-y-6">
+        <form name="booking" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="space-y-6">
+          <input type="hidden" name="form-name" value="booking" />
+          <input type="hidden" name="bot-field" />
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             <!-- 姓名 -->
             <div>

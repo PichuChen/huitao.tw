@@ -3,12 +3,12 @@ import Layout from '../layouts/Layout.astro';
 
 // 模擬相簿資料
 const galleryItems = [
-  { img: "https://images.unsplash.com/photo-1549463952-b0beeb5d06ce?w=800&auto=format&fit=crop", title: "晨曦茶具組" },
-  { img: "https://images.unsplash.com/photo-1577969348983-32860dff5ea3?w=800&auto=format&fit=crop", title: "陶土花器" },
-  { img: "https://images.unsplash.com/photo-1616428782352-763266eb5637?w=800&auto=format&fit=crop", title: "日式手作碗" },
-  { img: "https://images.unsplash.com/photo-1596756860368-80e9a44c5ce7?w=800&auto=format&fit=crop", title: "學員體驗側拍" },
-  { img: "https://images.unsplash.com/photo-1493106641515-6b5623bf1fa6?w=800&auto=format&fit=crop", title: "復古陶盤" },
-  { img: "https://images.unsplash.com/photo-1574312891334-bf4b2628468d?w=800&auto=format&fit=crop", title: "陶藝展區" },
+  { id: 1, img: "https://images.unsplash.com/photo-1549463952-b0beeb5d06ce?w=800&auto=format&fit=crop", title: "晨曦茶具組" },
+  { id: 2, img: "https://images.unsplash.com/photo-1577969348983-32860dff5ea3?w=800&auto=format&fit=crop", title: "陶土花器" },
+  { id: 3, img: "https://images.unsplash.com/photo-1616428782352-763266eb5637?w=800&auto=format&fit=crop", title: "日式手作碗" },
+  { id: 4, img: "https://images.unsplash.com/photo-1596756860368-80e9a44c5ce7?w=800&auto=format&fit=crop", title: "學員體驗側拍" },
+  { id: 5, img: "https://images.unsplash.com/photo-1493106641515-6b5623bf1fa6?w=800&auto=format&fit=crop", title: "復古陶盤" },
+  { id: 6, img: "https://images.unsplash.com/photo-1574312891334-bf4b2628468d?w=800&auto=format&fit=crop", title: "陶藝展區" },
 ];
 ---
 
@@ -21,9 +21,13 @@ const galleryItems = [
     </div>
 
     <!-- Masonry grid layout -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mb-20">
       {galleryItems.map((item) => (
-        <a href="#" class="group relative block overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all">
+        <button 
+          data-item-id={item.id}
+          type="button"
+          class="gallery-item group relative block overflow-hidden rounded-2xl shadow-md hover:shadow-xl transition-all text-left"
+        >
           <div class="aspect-w-1 aspect-h-1 overflow-hidden">
             <img 
               src={item.img} 
@@ -32,12 +36,281 @@ const galleryItems = [
             />
           </div>
           <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-            <div class="p-6">
-              <h3 class="text-xl font-bold text-white tracking-wide">{item.title}</h3>
+            <div class="p-6 w-full">
+              <h3 class="text-xl font-bold text-white tracking-wide mb-2">{item.title}</h3>
+              <p class="text-sm text-gray-200">點擊查看詳情 →</p>
             </div>
           </div>
-        </a>
+        </button>
       ))}
     </div>
+
+    <!-- 聯絡表單區域 -->
+    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden mt-20 p-8 md:p-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-2">對作品有興趣？</h2>
+      <p class="text-gray-600 mb-8">若您想詢問特定作品或有任何問題，歡迎填寫以下表單</p>
+      
+      <form name="gallery-inquiry" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="space-y-6">
+        <input type="hidden" name="form-name" value="gallery-inquiry" />
+        <input type="hidden" name="bot-field" />
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="contact-name" class="block text-sm font-medium text-gray-700 mb-2">姓名 <span class="text-red-500">*</span></label>
+            <input type="text" id="contact-name" name="name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="請輸入姓名" required />
+          </div>
+          
+          <div>
+            <label for="contact-email" class="block text-sm font-medium text-gray-700 mb-2">信箱 <span class="text-red-500">*</span></label>
+            <input type="email" id="contact-email" name="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="請輸入信箱" required />
+          </div>
+        </div>
+
+        <div>
+          <label for="related-work" class="block text-sm font-medium text-gray-700 mb-2">相關作品</label>
+          <select id="related-work" name="related_work" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+            <option value="">請選擇作品</option>
+            {galleryItems.map((item) => (
+              <option value={item.title}>{item.title}</option>
+            ))}
+          </select>
+        </div>
+
+        <div>
+          <label for="gallery-message" class="block text-sm font-medium text-gray-700 mb-2">問題或需求 <span class="text-red-500">*</span></label>
+          <textarea id="gallery-message" name="message" rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="請描述您的需求" required></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 rounded-lg text-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
+          送出詢問
+        </button>
+      </form>
+    </div>
+
+    <!-- 圖片上傳區域 -->
+    <div class="bg-brand-50 rounded-3xl shadow-lg overflow-hidden mt-20 p-8 md:p-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-2">分享您的作品</h2>
+      <p class="text-gray-600 mb-8">若您是學員，歡迎上傳您的作品照片到我們的相簿</p>
+      
+      <form name="gallery-upload" method="POST" data-netlify="true" netlify-honeypot="bot-field" enctype="multipart/form-data" class="space-y-6">
+        <input type="hidden" name="form-name" value="gallery-upload" />
+        <input type="hidden" name="bot-field" />
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="upload-name" class="block text-sm font-medium text-gray-700 mb-2">您的名字 <span class="text-red-500">*</span></label>
+            <input type="text" id="upload-name" name="artist_name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="請輸入名字" required />
+          </div>
+          
+          <div>
+            <label for="upload-email" class="block text-sm font-medium text-gray-700 mb-2">信箱 <span class="text-red-500">*</span></label>
+            <input type="email" id="upload-email" name="artist_email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="請輸入信箱" required />
+          </div>
+        </div>
+
+        <div>
+          <label for="work-title" class="block text-sm font-medium text-gray-700 mb-2">作品名稱 <span class="text-red-500">*</span></label>
+          <input type="text" id="work-title" name="work_title" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="請輸入作品名稱" required />
+        </div>
+
+        <div>
+          <label for="work-description" class="block text-sm font-medium text-gray-700 mb-2">作品描述</label>
+          <textarea id="work-description" name="work_description" rows="3" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="簡短介紹您的作品"></textarea>
+        </div>
+
+        <div>
+          <label for="work-image" class="block text-sm font-medium text-gray-700 mb-2">上傳圖片 <span class="text-red-500">*</span></label>
+          <input type="file" id="work-image" name="work_image" accept="image/*" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" required />
+          <div class="image-preview mt-4"></div>
+        </div>
+
+        <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 rounded-lg text-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
+          上傳作品
+        </button>
+      </form>
+    </div>
+
+    <!-- 評論系統區域 -->
+    <div class="bg-white rounded-3xl shadow-2xl overflow-hidden mt-20 p-8 md:p-12">
+      <h2 class="text-3xl font-bold text-gray-900 mb-8">評論與回饋</h2>
+      
+      <!-- 評論表單 -->
+      <form name="gallery-comment" method="POST" data-netlify="true" netlify-honeypot="bot-field" class="space-y-6 mb-12 pb-12 border-b border-gray-200">
+        <input type="hidden" name="form-name" value="gallery-comment" />
+        <input type="hidden" name="bot-field" />
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div>
+            <label for="comment-name" class="block text-sm font-medium text-gray-700 mb-2">您的名字 <span class="text-red-500">*</span></label>
+            <input type="text" id="comment-name" name="commenter_name" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="請輸入名字" required />
+          </div>
+          
+          <div>
+            <label for="comment-email" class="block text-sm font-medium text-gray-700 mb-2">信箱 <span class="text-red-500">*</span></label>
+            <input type="email" id="comment-email" name="commenter_email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="請輸入信箱" required />
+          </div>
+        </div>
+
+        <div>
+          <label for="comment-rating" class="block text-sm font-medium text-gray-700 mb-2">評分</label>
+          <select id="comment-rating" name="rating" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all">
+            <option value="5">⭐⭐⭐⭐⭐ 非常滿意</option>
+            <option value="4">⭐⭐⭐⭐ 滿意</option>
+            <option value="3">⭐⭐⭐ 普通</option>
+            <option value="2">⭐⭐ 一般</option>
+            <option value="1">⭐ 不滿意</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="comment-text" class="block text-sm font-medium text-gray-700 mb-2">評論內容 <span class="text-red-500">*</span></label>
+          <textarea id="comment-text" name="comment_text" rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none transition-all" placeholder="分享您的想法和建議" required></textarea>
+        </div>
+
+        <button type="submit" class="w-full bg-brand-600 hover:bg-brand-700 text-white font-bold py-4 rounded-lg text-lg shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-1">
+          提交評論
+        </button>
+      </form>
+
+      <!-- 顯示評論的區域 -->
+      <div class="comments-display">
+        <p class="text-center text-gray-500 py-8">暫無評論，快來分享您的想法！</p>
+      </div>
+    </div>
   </div>
+
+  <script>
+    // 相簿管理功能
+    const COMMENTS_STORAGE_KEY = 'gallery_comments';
+
+    function getComments() {
+      const stored = localStorage.getItem(COMMENTS_STORAGE_KEY);
+      return stored ? JSON.parse(stored) : [];
+    }
+
+    function addComment(comment) {
+      const comments = getComments();
+      const newComment = {
+        id: Date.now(),
+        ...comment,
+        timestamp: new Date().toISOString(),
+        approved: true
+      };
+      comments.unshift(newComment);
+      localStorage.setItem(COMMENTS_STORAGE_KEY, JSON.stringify(comments));
+      return newComment;
+    }
+
+    function escapeHtml(text) {
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+
+    function renderComments() {
+      const container = document.querySelector('.comments-display');
+      const comments = getComments();
+      
+      if (comments.length === 0) {
+        container.innerHTML = '<p class="text-center text-gray-500 py-8">暫無評論，快來分享您的想法！</p>';
+        return;
+      }
+
+      const commentsHTML = comments
+        .map(comment => `
+          <div class="bg-gray-50 rounded-lg p-6 mb-4 animate-fade-in">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <h4 class="font-semibold text-gray-900">${escapeHtml(comment.commenter_name)}</h4>
+                <p class="text-sm text-gray-500">${new Date(comment.timestamp).toLocaleDateString('zh-TW')}</p>
+              </div>
+              <div class="text-yellow-400">${'⭐'.repeat(comment.rating || 5)}</div>
+            </div>
+            <p class="text-gray-700">${escapeHtml(comment.comment_text)}</p>
+          </div>
+        `)
+        .join('');
+
+      container.innerHTML = commentsHTML;
+    }
+
+    function showNotification(message) {
+      const notification = document.createElement('div');
+      notification.className = 'fixed top-4 right-4 bg-green-500 text-white px-6 py-3 rounded-lg shadow-lg z-50 animate-fade-in';
+      notification.textContent = message;
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
+    }
+
+    // 初始化
+    document.addEventListener('DOMContentLoaded', () => {
+      // 評論表單
+      const commentForm = document.querySelector('form[name="gallery-comment"]');
+      if (commentForm) {
+        commentForm.addEventListener('submit', (e) => {
+          e.preventDefault();
+          const formData = new FormData(commentForm);
+          const comment = {
+            commenter_name: formData.get('commenter_name'),
+            commenter_email: formData.get('commenter_email'),
+            rating: formData.get('rating'),
+            comment_text: formData.get('comment_text')
+          };
+          
+          addComment(comment);
+          commentForm.reset();
+          renderComments();
+          showNotification('感謝您的評論！');
+        });
+      }
+
+      // 圖片預覽
+      const imageInput = document.querySelector('input[name="work_image"]');
+      if (imageInput) {
+        imageInput.addEventListener('change', (e) => {
+          if (e.target.files && e.target.files[0]) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+              const preview = document.querySelector('.image-preview');
+              if (preview) {
+                preview.innerHTML = `<img src="${event.target.result}" alt="預覽" class="max-w-xs rounded-lg">`;
+              }
+            };
+            reader.readAsDataURL(e.target.files[0]);
+          }
+        });
+      }
+
+      // 相簿項目點擊
+      document.querySelectorAll('.gallery-item').forEach(item => {
+        item.addEventListener('click', function() {
+          const itemId = this.getAttribute('data-item-id');
+          console.log('Clicked item:', itemId);
+        });
+      });
+
+      // 初始渲染評論
+      renderComments();
+    });
+  </script>
+
+  <style>
+    @keyframes fade-in {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .animate-fade-in {
+      animation: fade-in 0.3s ease-in-out;
+    }
+  </style>
 </Layout>
