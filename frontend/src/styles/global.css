@@ -3,7 +3,23 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    color-scheme: light;
+    --color-ink: #2C1F14;
+    --color-clay: #8B6F5E;
+    --color-sand: #C4A882;
+    --color-mist: #D4C5B8;
+    --color-celadon: #8FA99C;
+    --color-rice: #F5F0E8;
+  }
+
   body {
-    @apply text-gray-800 bg-[#f5f7f3] antialiased;
+    @apply antialiased;
+    color: var(--color-ink);
+    background-color: var(--color-rice);
+  }
+
+  a {
+    color: inherit;
   }
 }

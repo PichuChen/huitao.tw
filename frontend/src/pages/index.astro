@@ -1,70 +1,80 @@
 ---
-import Layout from '../layouts/Layout.astro';
 ---
 
-<Layout title="首頁">
-  <!-- 英雄區塊 -->
-  <div class="relative h-screen flex items-center justify-center overflow-hidden">
-    <div class="absolute inset-0 bg-cover bg-center opacity-30 mix-blend-overlay" style="background-image: url('https://images.unsplash.com/photo-1627949313437-1473cdbe7fc5?w=1600&auto=format&fit=crop');"></div>
-    
-    <div class="relative z-10 text-center px-4">
-      <h1 class="text-6xl sm:text-7xl font-bold text-yellow-400 mb-6 tracking-wider drop-shadow-lg">慧陶香坊</h1>
-      <p class="text-2xl sm:text-3xl text-yellow-400 mb-12 max-w-3xl mx-auto drop-shadow-md font-semibold">親手感受陶土的溫度，用創意塑造屬於你的藝術作品</p>
-      
-      <div class="flex flex-col sm:flex-row gap-4 justify-center">
-        <a href="/gallery" class="px-8 py-3 rounded-full bg-brand-500 hover:bg-brand-600 text-white font-semibold transition-transform transform hover:-translate-y-1">
-          瀏覽作品
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>慧陶香坊 Huitao Xiang Wellness</title>
+  </head>
+
+  <body>
+    <section class="hero">
+      <img src="/images/hero-main.jpg" alt="慧陶香坊" />
+
+      <div class="overlay">
+        <h1>在一念之間，回到本心</h1>
+
+        <p>
+          融合藝術・療癒・生活美學
+        </p>
+
+        <a href="https://line.me/R/ti/p/@573omqrc">
+          加入 LINE
         </a>
-        <a href="/booking" class="px-8 py-3 rounded-full border-2 border-brand-200 text-brand-50 hover:bg-brand-50 hover:text-brand-900 font-semibold transition-all">
-          預約課程
-        </a>
       </div>
-    </div>
-  </div>
+    </section>
+  </body>
+</html>
 
-  <!-- 特色區塊 -->
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-      <!-- 手工課程 -->
-      <div class="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all">
-        <img src="https://images.unsplash.com/photo-1610701596007-11502861dcfa?w=800&auto=format&fit=crop" alt="手工陶杯" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" />
-        <div class="p-6">
-          <h3 class="text-2xl font-bold text-gray-900 mb-2">手作課程</h3>
-          <p class="text-gray-600 mb-4">從零開始輕鬆學陶藝，我們提供初級到進階的課程，在溫暖的環境中發掘你的創意潛力。</p>
-          <a href="/booking" class="text-brand-600 font-medium hover:text-brand-800">立即預約 →</a>
-        </div>
-      </div>
+<style>
+  body {
+    margin: 0;
+    font-family: "Noto Serif TC", serif;
+    background: #f7f4ef;
+  }
 
-      <!-- 作品展示 -->
-      <div class="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all">
-        <img src="https://images.unsplash.com/photo-1493106641515-6b5623bf1fa6?w=800&auto=format&fit=crop" alt="手作課程" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" />
-        <div class="p-6">
-          <h3 class="text-2xl font-bold text-gray-900 mb-2">精選作品</h3>
-          <p class="text-gray-600 mb-4">欣賞來自學員和工作室的精彩作品，每一件器物都述說著創作者的故事與技藝。</p>
-          <a href="/gallery" class="text-brand-600 font-medium hover:text-brand-800">探索作品 →</a>
-        </div>
-      </div>
+  .hero {
+    position: relative;
+    height: 100vh;
+    overflow: hidden;
+  }
 
-      <!-- 展覽資訊 -->
-      <div class="group bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-2xl transition-all">
-        <img src="https://images.unsplash.com/photo-1574312891334-bf4b2628468d?w=800&auto=format&fit=crop" alt="陶藝展覽" class="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-500" />
-        <div class="p-6">
-          <h3 class="text-2xl font-bold text-gray-900 mb-2">展覽資訊</h3>
-          <p class="text-gray-600 mb-4">我們定期舉辦主題展覽，展示陶藝愛好者的創意作品，一起見證藝術的蛻變。</p>
-          <a href="/about" class="text-brand-600 font-medium hover:text-brand-800">了解更多 →</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  .hero img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-  <!-- CTA 區塊 -->
-  <div class="bg-gradient-to-r from-brand-600 to-brand-700 py-20">
-    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-      <h2 class="text-4xl font-bold text-white mb-6">準備開始你的陶藝之旅了嗎？</h2>
-      <p class="text-xl text-brand-100 mb-8">加入我們，與志同道合的創作者一起探索陶藝的無限可能。</p>
-      <a href="/booking" class="inline-block px-10 py-4 bg-white text-brand-600 font-bold rounded-full hover:bg-brand-50 transition-colors transform hover:-translate-y-1">
-        立即預約體驗
-      </a>
-    </div>
-  </div>
-</Layout>
+  .overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    color: white;
+    text-align: center;
+  }
+
+  h1 {
+    font-size: 56px;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 22px;
+    margin-bottom: 30px;
+  }
+
+  a {
+    background: #d4af37;
+    color: white;
+    padding: 14px 28px;
+    border-radius: 999px;
+    text-decoration: none;
+  }
+</style>
