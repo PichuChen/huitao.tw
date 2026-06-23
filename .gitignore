@@ -1,0 +1,6 @@
+.DS_Store
+*.zip
+huitao-netlify/
+netlify-upload/
+tmp_zip/
+frontend/backup/
