@@ -24,6 +24,15 @@ const navItems = [
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
     <title>{title} | 慧陶香坊</title>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZWMTYLVY2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() {{
+        dataLayer.push(arguments);
+      }}
+      gtag('js', new Date());
+      gtag('config', 'G-FZWMTYLVY2');
+    </script>
   </head>
   <body class="min-h-screen flex flex-col">
     <!-- Header/Nav -->
