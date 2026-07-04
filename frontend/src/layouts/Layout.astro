@@ -25,11 +25,11 @@ const navItems = [
     <meta name="generator" content={Astro.generator} />
     <title>{title} | 慧陶香坊</title>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-FZWMTYLVY2"></script>
-    <script>
+    <script is:inline>
       window.dataLayer = window.dataLayer || [];
-      function gtag() {{
+      function gtag() {
         dataLayer.push(arguments);
-      }}
+      }
       gtag('js', new Date());
       gtag('config', 'G-FZWMTYLVY2');
     </script>
