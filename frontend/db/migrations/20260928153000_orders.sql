@@ -52,7 +52,7 @@ CREATE TABLE IF NOT EXISTS orders (
   submitted_at TIMESTAMPTZ,
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  CONSTRAINT orders_total_check CHECK (total = subtotal + shipping_fee)
+  CHECK (total = subtotal + shipping_fee)
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS orders_source_submission_uidx
@@ -71,7 +71,7 @@ CREATE TABLE IF NOT EXISTS order_items (
   unit_price INTEGER NOT NULL CHECK (unit_price >= 0),
   line_total INTEGER NOT NULL CHECK (line_total >= 0),
   created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-  CONSTRAINT order_items_total_check CHECK (line_total = quantity * unit_price)
+  CHECK (line_total = quantity * unit_price)
 );
 
 CREATE INDEX IF NOT EXISTS order_items_order_idx ON order_items (order_id);
