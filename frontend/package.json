@@ -9,7 +9,8 @@
     "dev": "astro dev",
     "build": "astro build && node scripts/create-legacy-pages.mjs",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "db:migrate": "node scripts/migrate-db.mjs"
   },
   "dependencies": {
     "pg": "8.23.0",
