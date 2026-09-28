@@ -1,0 +1,212 @@
+---
+import '../../styles/global.css';
+
+const statuses = [
+  ['new', '新訂單'],
+  ['contacted', '已聯絡'],
+  ['pending_payment', '待付款'],
+  ['paid', '已付款'],
+  ['packing', '待出貨'],
+  ['shipped', '已出貨'],
+  ['completed', '已完成'],
+  ['cancelled', '已取消'],
+];
+---
+<!doctype html>
+<html lang="zh-TW">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="robots" content="noindex,nofollow,noarchive" />
+    <title>訂單管理｜慧陶香坊</title>
+  </head>
+  <body class="min-h-screen bg-stone-50 text-stone-900">
+    <main class="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <header class="mb-8 flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+        <div>
+          <p class="text-sm font-medium tracking-widest text-amber-700">HUITAO ADMIN</p>
+          <h1 class="mt-1 text-3xl font-bold">訂單管理</h1>
+          <p class="mt-2 text-sm text-stone-500">第一版後台：Google Form 訂單同步、查詢與狀態更新。</p>
+        </div>
+        <button id="logout" class="hidden rounded-lg border border-stone-300 bg-white px-4 py-2 text-sm hover:bg-stone-100">清除登入憑證</button>
+      </header>
+
+      <section id="authPanel" class="mb-8 rounded-2xl border border-stone-200 bg-white p-6 shadow-sm">
+        <h2 class="text-lg font-semibold">管理憑證</h2>
+        <p class="mt-1 text-sm text-stone-500">Token 只保存在目前瀏覽器分頁的 sessionStorage。</p>
+        <form id="authForm" class="mt-4 flex flex-col gap-3 sm:flex-row">
+          <input id="token" type="password" autocomplete="current-password" placeholder="HUITAO_ADMIN_TOKEN" class="min-w-0 flex-1 rounded-lg border border-stone-300 px-3 py-2 outline-none ring-amber-500 focus:ring" required />
+          <button class="rounded-lg bg-stone-900 px-5 py-2 font-medium text-white hover:bg-stone-700">載入訂單</button>
+        </form>
+      </section>
+
+      <section id="ordersPanel" class="hidden">
+        <div class="mb-4 flex flex-col gap-3 rounded-2xl border border-stone-200 bg-white p-4 shadow-sm sm:flex-row sm:items-center sm:justify-between">
+          <div class="flex items-center gap-3">
+            <label for="statusFilter" class="text-sm font-medium">狀態</label>
+            <select id="statusFilter" class="rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm">
+              <option value="">全部</option>
+              {statuses.map(([value, label]) => <option value={value}>{label}</option>)}
+            </select>
+          </div>
+          <button id="refresh" class="rounded-lg border border-stone-300 bg-white px-4 py-2 text-sm hover:bg-stone-100">重新整理</button>
+        </div>
+
+        <div id="message" class="mb-4 hidden rounded-lg px-4 py-3 text-sm"></div>
+        <div id="orders" class="space-y-4"></div>
+      </section>
+    </main>
+
+    <template id="orderTemplate">
+      <article class="rounded-2xl border border-stone-200 bg-white p-5 shadow-sm">
+        <div class="flex flex-col gap-4 lg:flex-row lg:items-start lg:justify-between">
+          <div>
+            <div class="flex flex-wrap items-center gap-2">
+              <h2 data-order-no class="text-lg font-bold"></h2>
+              <span data-status class="rounded-full bg-stone-100 px-2.5 py-1 text-xs font-medium"></span>
+            </div>
+            <p data-created class="mt-1 text-xs text-stone-500"></p>
+          </div>
+          <div class="text-left lg:text-right">
+            <p data-total class="text-2xl font-bold text-amber-800"></p>
+            <p data-payment class="text-sm text-stone-500"></p>
+          </div>
+        </div>
+        <div class="mt-5 grid gap-5 lg:grid-cols-3">
+          <div>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-stone-400">客戶／配送</h3>
+            <div data-customer class="mt-2 whitespace-pre-line text-sm leading-6"></div>
+          </div>
+          <div>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-stone-400">商品</h3>
+            <div data-items class="mt-2 text-sm leading-6"></div>
+          </div>
+          <div>
+            <h3 class="text-xs font-bold uppercase tracking-wider text-stone-400">管理</h3>
+            <div class="mt-2 flex flex-col gap-2">
+              <select data-status-select class="rounded-lg border border-stone-300 bg-white px-3 py-2 text-sm">
+                {statuses.map(([value, label]) => <option value={value}>{label}</option>)}
+              </select>
+              <input data-note class="rounded-lg border border-stone-300 px-3 py-2 text-sm" placeholder="狀態變更備註（選填）" />
+              <button data-save class="rounded-lg bg-amber-700 px-4 py-2 text-sm font-medium text-white hover:bg-amber-800">更新狀態</button>
+            </div>
+          </div>
+        </div>
+        <div data-customer-note-wrap class="mt-4 hidden rounded-lg bg-stone-50 p-3 text-sm">
+          <span class="font-medium">客戶備註：</span><span data-customer-note></span>
+        </div>
+      </article>
+    </template>
+
+    <script is:inline>
+      const labels = Object.fromEntries([
+        ['new', '新訂單'], ['contacted', '已聯絡'], ['pending_payment', '待付款'], ['paid', '已付款'],
+        ['packing', '待出貨'], ['shipped', '已出貨'], ['completed', '已完成'], ['cancelled', '已取消'],
+      ]);
+      const money = new Intl.NumberFormat('zh-TW', { style: 'currency', currency: 'TWD', maximumFractionDigits: 0 });
+      const authPanel = document.querySelector('#authPanel');
+      const ordersPanel = document.querySelector('#ordersPanel');
+      const ordersEl = document.querySelector('#orders');
+      const messageEl = document.querySelector('#message');
+      const logout = document.querySelector('#logout');
+      const statusFilter = document.querySelector('#statusFilter');
+
+      function token() { return sessionStorage.getItem('huitao_admin_token') || ''; }
+      function showMessage(text, type = 'info') {
+        messageEl.textContent = text;
+        messageEl.className = `mb-4 rounded-lg px-4 py-3 text-sm ${type === 'error' ? 'bg-red-50 text-red-700' : 'bg-emerald-50 text-emerald-700'}`;
+      }
+      function hideMessage() { messageEl.classList.add('hidden'); }
+      function authHeaders() { return { authorization: `Bearer ${token()}` }; }
+
+      async function loadOrders() {
+        hideMessage();
+        const qs = statusFilter.value ? `?status=${encodeURIComponent(statusFilter.value)}` : '';
+        const response = await fetch(`/api/admin/orders${qs}`, { headers: authHeaders() });
+        if (response.status === 401) {
+          sessionStorage.removeItem('huitao_admin_token');
+          authPanel.classList.remove('hidden');
+          ordersPanel.classList.add('hidden');
+          logout.classList.add('hidden');
+          throw new Error('管理憑證無效');
+        }
+        const data = await response.json();
+        if (!response.ok) throw new Error(data.error || '讀取訂單失敗');
+        renderOrders(data.orders || []);
+        authPanel.classList.add('hidden');
+        ordersPanel.classList.remove('hidden');
+        logout.classList.remove('hidden');
+      }
+
+      function renderOrders(orders) {
+        ordersEl.replaceChildren();
+        if (!orders.length) {
+          ordersEl.innerHTML = '<div class="rounded-2xl border border-dashed border-stone-300 bg-white p-10 text-center text-stone-500">目前沒有符合條件的訂單</div>';
+          return;
+        }
+        const template = document.querySelector('#orderTemplate');
+        for (const order of orders) {
+          const node = template.content.cloneNode(true);
+          node.querySelector('[data-order-no]').textContent = order.order_no;
+          node.querySelector('[data-status]').textContent = labels[order.status] || order.status;
+          node.querySelector('[data-created]').textContent = new Date(order.created_at).toLocaleString('zh-TW');
+          node.querySelector('[data-total]').textContent = money.format(order.total);
+          node.querySelector('[data-payment]').textContent = order.payment_method || '付款方式未填';
+          node.querySelector('[data-customer]').textContent = [
+            order.shipping_name,
+            order.shipping_phone,
+            order.shipping_email,
+            order.shipping_address,
+          ].filter(Boolean).join('\n');
+          node.querySelector('[data-items]').innerHTML = (order.items || []).map((item) =>
+            `<div>${escapeHtml(item.productName)} × ${item.quantity}<br><span class="text-stone-500">${money.format(item.lineTotal)}</span></div>`
+          ).join('');
+          const select = node.querySelector('[data-status-select]');
+          select.value = order.status;
+          const note = node.querySelector('[data-note]');
+          const save = node.querySelector('[data-save]');
+          save.addEventListener('click', async () => {
+            save.disabled = true;
+            try {
+              const response = await fetch('/api/admin/orders', {
+                method: 'PATCH',
+                headers: { ...authHeaders(), 'content-type': 'application/json' },
+                body: JSON.stringify({ orderId: order.id, status: select.value, note: note.value }),
+              });
+              const data = await response.json();
+              if (!response.ok) throw new Error(data.error || '更新失敗');
+              showMessage(`${order.order_no} 已更新為「${labels[select.value]}」`);
+              await loadOrders();
+            } catch (error) {
+              showMessage(error.message, 'error');
+            } finally {
+              save.disabled = false;
+            }
+          });
+          if (order.customer_note) {
+            node.querySelector('[data-customer-note-wrap]').classList.remove('hidden');
+            node.querySelector('[data-customer-note]').textContent = order.customer_note;
+          }
+          ordersEl.appendChild(node);
+        }
+      }
+
+      function escapeHtml(value) {
+        return String(value).replace(/[&<>'"]/g, (char) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' })[char]);
+      }
+
+      document.querySelector('#authForm').addEventListener('submit', async (event) => {
+        event.preventDefault();
+        sessionStorage.setItem('huitao_admin_token', document.querySelector('#token').value.trim());
+        try { await loadOrders(); } catch (error) { showMessage(error.message, 'error'); }
+      });
+      document.querySelector('#refresh').addEventListener('click', () => loadOrders().catch((e) => showMessage(e.message, 'error')));
+      statusFilter.addEventListener('change', () => loadOrders().catch((e) => showMessage(e.message, 'error')));
+      logout.addEventListener('click', () => {
+        sessionStorage.removeItem('huitao_admin_token');
+        location.reload();
+      });
+      if (token()) loadOrders().catch((e) => showMessage(e.message, 'error'));
+    </script>
+  </body>
+</html>
